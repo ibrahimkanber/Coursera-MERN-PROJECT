@@ -1,9 +1,10 @@
 import React from 'react'
 import {
-    Card, CardImg,CardText,
-    CardTitle
+    Breadcrumb, BreadcrumbItem
 } from 'reactstrap';
-
+import {Link} from "react-router-dom"
+import { RenderDish } from './RenderDish';
+import { RenderComments } from './RenderComments';
 
 
 export const DishdetailComponent = (props) => {
@@ -11,29 +12,23 @@ export const DishdetailComponent = (props) => {
     if (props.dish) {
         return (
             <div className="container">
+                <Breadcrumb>
+                <BreadcrumbItem>
+                    <Link to="/menu">Menu</Link>
+                </BreadcrumbItem>
+                <BreadcrumbItem active>
+                  {props.dish.name}
+                </BreadcrumbItem>
+            </Breadcrumb>
+
+            <div className="col-12">
+                <h3>{props.dish.name}</h3>
+                <hr/>
+            </div>
+
             <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    <Card>
-                        <CardImg src={props.dish.image} width="100%"/>
-                    </Card>
-                </div>
-                <div className="col-12 col-md-5 m-1" >
-                   <Card style={{height:"100%"}}>
-                       <CardTitle>Comments</CardTitle>
-                        {
-                            props.dish.comments.map((comment,index)=>{
-                                return(
-                                    <div  key={index}>
-                                        <CardText style={{textAlign:"left"}}>{comment.comment}</CardText>
-                                        <CardText style={{textAlign:"left"}}>--{comment.author}-- 
-                                          {  new Intl.DateTimeFormat("en-US",{year:"numeric", month:"short",day:"2-digit"}).format(new Date(Date.parse(comment.date)))}</CardText>
-                                    
-                                    </div>
-                                )
-                            })
-                        }
-                    </Card>
-                </div>
+                <RenderDish dish={props.dish}/>
+                <RenderComments comments={props.comments}/>
             </div>
             </div>
         )
