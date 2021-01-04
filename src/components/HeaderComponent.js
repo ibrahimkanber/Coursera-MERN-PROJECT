@@ -13,7 +13,9 @@ import {
     Button,
     FormGroup,
     Input,
-    Label,Form
+    Label,
+    Form,
+    FormFeedback
 
 
 } from 'reactstrap';
@@ -116,12 +118,20 @@ export const HeaderComponent = () => {
                             <Label htmlFor="userName">Username</Label>
                             <Input 
                             type="text" 
-                            name="username"  
+                            name="username" 
+                            invalid={formik.errors.userName} 
                             {...formik.getFieldProps('userName')}/>
+                            <FormFeedback>{formik.errors.userName}</FormFeedback>
                         </FormGroup>
                         <FormGroup>
                             <Label htmlFor="userName">Password</Label>
-                            <Input type="password" name="password"  {...formik.getFieldProps('password')} />
+                            <Input 
+                            type="password" 
+                            name="password"  
+                            invalid={formik.errors.password} 
+                            {...formik.getFieldProps('password')}
+                            />
+                            <FormFeedback>{formik.errors.password}</FormFeedback>
                         </FormGroup>
                         <FormGroup check>
                             <Label check>
