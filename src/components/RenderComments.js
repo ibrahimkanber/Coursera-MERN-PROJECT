@@ -6,10 +6,13 @@ import {
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import {useDispatch} from "react-redux"
+import {addComment,fetchDishes} from "../redux/ActionCreators"
 
-export const RenderComments = ({ comments }) => {
+export const RenderComments = ({ comments,dishId }) => {
+   
     const [isModalOpen, setModalOpen] = useState(false)
-
+    const dispatch=useDispatch()
     const commentSchema=Yup.object().shape({
         name:Yup.string().required().min(3,"Must be greater than 2 characters").max(15,"Must be  15 characters or less"),
 
@@ -24,6 +27,8 @@ export const RenderComments = ({ comments }) => {
         validationSchema:commentSchema,
         onSubmit:values=>{
             console.log(values)
+            setModalOpen(false)
+            dispatch(addComment(dishId,+ values.rating,values.name,values.comment))
         }
     })
 
@@ -88,7 +93,7 @@ export const RenderComments = ({ comments }) => {
                             id="comment"
                             type="textarea"
                             rows={6}
-
+                            {...formik.getFieldProps('comment')}
                             />
                             <FormFeedback></FormFeedback>
                         </FormGroup>

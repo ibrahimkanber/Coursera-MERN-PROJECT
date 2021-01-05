@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useState,useEffect} from "react"
 import { MenuComponent } from './MenuComponent';
 
 import { HeaderComponent } from "./HeaderComponent";
@@ -10,21 +10,30 @@ import {DishdetailComponent} from "./DishdetailComponent"
 import About from "./AboutUs";
 
 import {useSelector,useDispatch} from "react-redux"
+import {fetchDishes} from "../redux/ActionCreators"
 
 
 
 function Main() {
   const {dishes,leaders,comments,promotions}=useSelector(state=>state)
-  const [selectedDishId,setSelectedDishId]=useState("")
+  const dispatch=useDispatch()
 
-  const onDishSelect=(dishId)=>{
-      setSelectedDishId(dishId)
-  }
+
+  useEffect(() => {
+    dispatch(fetchDishes())
+  
+  }, [])
+
+
+ 
+
 
   const HomePage=()=>{
     return(
-<HomeComponent 
-        dish={dishes.filter(dish=>dish.featured)[0]}
+      <HomeComponent 
+        dish={dishes.dishes.filter(dish=>dish.featured)[0]}
+        dishesLoading={dishes.isLoading}
+        errMess={dishes.errorMessage}
         promotion={promotions.filter(promo=>promo.featured)[0]}
         leader={leaders.filter(lead=>lead.featured)[0]}
         />
@@ -34,13 +43,15 @@ function Main() {
   const DishWithId=({match})=>{
     return(
       <DishdetailComponent 
-      dish={dishes.filter(dish=>dish.id==parseInt(match.params.id,10))[0]}
+      dish={dishes.dishes.filter(dish=>dish.id==parseInt(match.params.id,10))[0]}
       comments={comments.filter(comment=>comment.dishId==parseInt(match.params.id,10))}
+      dishesLoading={dishes.isLoading}
+      errMess={dishes.errorMessage}
       />
     )
   }
 
-  const AboutUs=({match})=>{
+  const AboutUs=()=>{
     return(
       <About leaders={leaders}/>
     )
@@ -53,7 +64,7 @@ function Main() {
 
         <Route path="/home" component={HomePage}/>
 
-        <Route exact path ="/menu" component={()=><MenuComponent dishes={dishes} onDishSelect={onDishSelect}/>}/>
+        <Route exact path ="/menu" component={()=><MenuComponent dishes={dishes} />}/>
 
         <Route path="/menu/:id" component={DishWithId}/>
 
