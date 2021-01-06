@@ -7,7 +7,7 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {useDispatch} from "react-redux"
-import {addComment,fetchDishes} from "../redux/ActionCreators"
+import {postComment,fetchDishes} from "../redux/ActionCreators"
 
 export const RenderComments = ({ comments,dishId }) => {
    
@@ -28,7 +28,7 @@ export const RenderComments = ({ comments,dishId }) => {
         onSubmit:values=>{
             console.log(values)
             setModalOpen(false)
-            dispatch(addComment(dishId,+ values.rating,values.name,values.comment))
+            dispatch(postComment(dishId,+ values.rating,values.name,values.comment))
         }
     })
 

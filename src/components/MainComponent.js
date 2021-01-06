@@ -10,17 +10,20 @@ import {DishdetailComponent} from "./DishdetailComponent"
 import About from "./AboutUs";
 
 import {useSelector,useDispatch} from "react-redux"
-import {fetchDishes} from "../redux/ActionCreators"
+import {fetchDishes,fetchComments,fetchPromos} from "../redux/ActionCreators"
 
 
 
 function Main() {
   const {dishes,leaders,comments,promotions}=useSelector(state=>state)
+
   const dispatch=useDispatch()
 
 
   useEffect(() => {
     dispatch(fetchDishes())
+    dispatch(fetchComments())
+    dispatch(fetchPromos())
   
   }, [])
 
@@ -34,7 +37,9 @@ function Main() {
         dish={dishes.dishes.filter(dish=>dish.featured)[0]}
         dishesLoading={dishes.isLoading}
         errMess={dishes.errorMessage}
-        promotion={promotions.filter(promo=>promo.featured)[0]}
+        promotion={promotions.promotions.filter(promo=>promo.featured)[0]}
+        promosLoading={promotions.isLoading}
+        promosErrMess={promotions.errorMessage}
         leader={leaders.filter(lead=>lead.featured)[0]}
         />
     )
@@ -43,10 +48,11 @@ function Main() {
   const DishWithId=({match})=>{
     return(
       <DishdetailComponent 
-      dish={dishes.dishes.filter(dish=>dish.id==parseInt(match.params.id,10))[0]}
-      comments={comments.filter(comment=>comment.dishId==parseInt(match.params.id,10))}
       dishesLoading={dishes.isLoading}
+      dish={dishes.dishes.filter(dish=>dish.id==parseInt(match.params.id,10))[0]}
       errMess={dishes.errorMessage}
+      comments={comments.comments.filter(comment=>comment.dishId==parseInt(match.params.id,10))}
+      errMess={comments.errorMessage}
       />
     )
   }

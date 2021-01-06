@@ -6,7 +6,7 @@ import { RenderLeader } from './RenderLeader';
 function About(props) {
     
     
-    const leaders = props.leaders.map((leader) =><RenderLeader leader={leader}/>);
+    const leaders = props.leaders.map((leader,index) =><RenderLeader key={index} leader={leader}/>);
 
     
     return(

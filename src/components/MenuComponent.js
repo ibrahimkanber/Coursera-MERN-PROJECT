@@ -5,6 +5,7 @@ import {
     CardTitle,Breadcrumb,BreadcrumbItem
 } from 'reactstrap';
 
+import {baseUrl} from "../shared/baseUrl"
 
 export const MenuComponent = (props) => {
     const history=useHistory()
@@ -28,12 +29,12 @@ export const MenuComponent = (props) => {
           
            
             {
-                props.dishes.map(dish => {
+                props.dishes.dishes.map(dish => {
                     return (
                         <div key={dish.id} className="col-12 col-md-5 m-1">
 
                         <Card onClick={()=>history.push(`/menu/${dish.id}`)} >
-                            <CardImg width="100%" src={dish.image} alt={dish.name} />
+                            <CardImg width="100%" src={baseUrl+dish.image} alt={dish.name} />
                             <CardImgOverlay>
                                 <CardTitle tag="h5" style={{textAlign:'left'}}>{dish.name}</CardTitle>
                             </CardImgOverlay>
