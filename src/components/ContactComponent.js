@@ -5,8 +5,12 @@ import {
 import { useFormik } from "formik";
 import { Link } from "react-router-dom"
 import * as Yup from "yup";
-export const Contact = (props) => {
+import {useDispatch} from "react-redux"
+import {postFeedback} from "../redux/ActionCreators"
 
+
+export const Contact = (props) => {
+    const dispatch=useDispatch()
     const contactUsSchema = Yup.object().shape({
         email: Yup.string().email("Invalid Email").required("Email is required!!"),
         firstName: Yup.string()
@@ -33,7 +37,7 @@ export const Contact = (props) => {
             feedback: ""
         },
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            dispatch(postFeedback(values))
         },
         validationSchema: contactUsSchema
     })

@@ -2,10 +2,10 @@ import React from 'react'
 import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from "reactstrap"
 import { Loading } from './LoadingComponent'
 import {baseUrl} from "../shared/baseUrl"
-
+import { FadeTransform } from 'react-animation-components';
 
 export const RenderCard = ({ item, isLoading, errMess }) => {
-console.log(item)
+/* console.log(item) */
     if (isLoading) {
         return (
             <Loading />
@@ -18,6 +18,11 @@ console.log(item)
 
 
         return (
+            <FadeTransform
+            in
+            transformProps={{
+                exitTransform: 'scale(0.5) translateY(-50%)'
+            }}>
             <Card>
                 <CardImg src={baseUrl+item.image} alt={item.name} />
                 <CardBody>
@@ -26,6 +31,7 @@ console.log(item)
                     <CardText>{item.description}</CardText>
                 </CardBody>
             </Card>
+            </FadeTransform>
         )
 
     }

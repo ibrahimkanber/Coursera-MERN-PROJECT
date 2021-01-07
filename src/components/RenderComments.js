@@ -7,7 +7,7 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {useDispatch} from "react-redux"
-import {postComment,fetchDishes} from "../redux/ActionCreators"
+import {postComment} from "../redux/ActionCreators"
 
 export const RenderComments = ({ comments,dishId }) => {
    

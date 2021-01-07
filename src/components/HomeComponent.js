@@ -1,6 +1,9 @@
 import React from 'react'
 import {RenderCard} from "./RenderCard"
+
+
 export const HomeComponent = (props) => {
+    
     return (
         <div className="container">
             <div className="row align-items-start">
@@ -18,9 +21,13 @@ export const HomeComponent = (props) => {
                     
                     />
                 </div>
-                <div className="col-12 col-md m-1">
-                    <RenderCard item={props.leader} />
-                </div>
+              <div className="col-12 col-md m-1">
+                    <RenderCard 
+                    item={props.leader}
+                    isLoading={props.leaderLoading} 
+                    errMess={props.leaderErrMess} />
+                    
+                </div> 
 
             </div>
         </div>
